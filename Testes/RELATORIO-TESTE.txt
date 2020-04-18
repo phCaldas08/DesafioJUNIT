@@ -1,0 +1,17 @@
+RM: 81674
+Nome: Pedro Henrique Caldas
+
+package junit_teste;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class JulgamentoPrisioneiroTeste {
+
+	@Test
+	void test() {
+		fail("Not yet implemented");
+	}
+
+}
