@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class JulgamentoPrisioneiroTeste {
+public class JulgamentoPrisioneiroTeste {
 
 	@Test
 	public void testCalculaPenaCulpadoCulpado() {
@@ -22,9 +22,152 @@ class JulgamentoPrisioneiroTeste {
 		
 		assertEquals(retEsperado, retReal);	
 		
+	}
+	
+	@Test
+	public void testCalculaPenaCulpadoInocente() {
+		String respP1 = "Culpado";
+		String respP2 = "Inocente";
 		
+		int retEsperado = 10;
+		
+		JulgamentoPrisioneiro jp = new JulgamentoPrisioneiro();
+		
+		int retReal = jp.calculaPena(respP1, respP2);
+		
+		assertEquals(retEsperado, retReal);	
 		
 	}
 	
-
+	@Test
+	public void testCalculaPenaInocenteCulpado() {
+		String respP1 = "Inocente";
+		String respP2 = "Culpado";
+		
+		int retEsperado = 1;
+		
+		JulgamentoPrisioneiro jp = new JulgamentoPrisioneiro();
+		
+		int retReal = jp.calculaPena(respP1, respP2);
+		
+		assertEquals(retEsperado, retReal);	
+		
+	}
+	
+	@Test
+	public void testCalculaPenaInocenteInocente() {
+		String respP1 = "Inocente";
+		String respP2 = "Inocente";
+		
+		int retEsperado = 0;
+		
+		JulgamentoPrisioneiro jp = new JulgamentoPrisioneiro();
+		
+		int retReal = jp.calculaPena(respP1, respP2);
+		
+		assertEquals(retEsperado, retReal);	
+		
+	}
+	
 }
+
+1 Rodada:
+
+	- Parâmetros do tipo Resposta que não existe, alterados para string.
+
+ public int calculaPena(String respostaPrisioneiroA, String respostaPrisioneiroB) {
+	      if (respostaPrisioneiroA.equals("Culpado")) {
+	          if (respostaPrisioneiroB.equals("Culpado")) {
+
+	- Valores de penas errados
+	
+	alterado para:
+
+	private int PENA_INOCENCIA = 0;
+	   private int PENA_CONDENACAO_MUTUA = 5;
+	   private int PENA_CONDENACAO_INDIVIDUAL = 10;
+	   private int PENA_CONDENACAO_CUMPLICES = 1;
+
+
+2 Rodada:
+
+	- Paramentros Inocente Inocente errados, esperado PENA_INOCENTE e retornou PENA_CONDENACAO_CUMPLICES
+
+	alterado para:
+		else {
+	                if (respostaPrisioneiroB.equals("Culpado")) {
+	                    return PENA_CONDENACAO_INDIVIDUAL;
+	                } else {
+	                         return PENA_INOCENCIA;
+	                        }
+	                }
+	     }
+
+
+
+3 Rodada:
+
+	- Parametros Culpado Inocente errados, esperado PENA_CONDENACAO_INDIVIDUAL e retornou PENA_INOCENCIA
+
+	alterado para:	
+
+	if (respostaPrisioneiroA.equals("Culpado")) {
+	          if (respostaPrisioneiroB.equals("Culpado")) {
+	            return PENA_CONDENACAO_MUTUA;
+	          } else {
+	                 return PENA_CONDENACAO_INDIVIDUAL;
+
+	                 }
+
+
+4 Rodada:
+
+	- Parametros Inocente Culpados errados, esperado PENA_CONDENACAO_CUMPLICES e retornou PENA_CONDENACAO_INDIVIDUAL
+
+	alterado para:
+		else {
+	                if (respostaPrisioneiroB.equals("Culpado")) {
+	                    return PENA_CONDENACAO_CUMPLICES;
+	                } else {
+	                         return PENA_INOCENCIA;
+	                        }
+	                }
+	     }
+
+
+Rodada 5
+	- Não retornou erros
+
+
+Código corrigido:
+
+
+package junit_teste;
+
+public class JulgamentoPrisioneiro {
+	   private int PENA_INOCENCIA = 0;
+	   private int PENA_CONDENACAO_MUTUA = 5;
+	   private int PENA_CONDENACAO_INDIVIDUAL = 10;
+	   private int PENA_CONDENACAO_CUMPLICES = 1;
+
+	   public int calculaPena(String respostaPrisioneiroA, String respostaPrisioneiroB) {
+	      if (respostaPrisioneiroA.equals("Culpado")) {
+	          if (respostaPrisioneiroB.equals("Culpado")) {
+	            return PENA_CONDENACAO_MUTUA;
+	          } else {
+	                 return PENA_CONDENACAO_INDIVIDUAL;
+	                 }
+	       } else {
+	                if (respostaPrisioneiroB.equals("Culpado")) {
+	                    return PENA_CONDENACAO_CUMPLICES;
+	                } else {
+	                         return PENA_INOCENCIA;
+	                        }
+	                }
+	     }
+	}
+
+
+
+	
+
