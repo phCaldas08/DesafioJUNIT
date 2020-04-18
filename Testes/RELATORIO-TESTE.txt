@@ -10,8 +10,21 @@ import org.junit.jupiter.api.Test;
 class JulgamentoPrisioneiroTeste {
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	public void testCalculaPenaCulpadoCulpado() {
+		String respP1 = "Culpado";
+		String respP2 = "Culpado";
+		
+		int retEsperado = 5;
+		
+		JulgamentoPrisioneiro jp = new JulgamentoPrisioneiro();
+		
+		int retReal = jp.calculaPena(respP1, respP2);
+		
+		assertEquals(retEsperado, retReal);	
+		
+		
+		
 	}
+	
 
 }
